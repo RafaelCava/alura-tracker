@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./.docker/config/Dockerfile
+    entrypoint: ./.docker/entrypoint.sh
+    ports:
+      - 8080:8080
+    container_name: vue3-alura
+    volumes:
+      - .:/home/node/app
+    networks:
+      - alura-vue3
+networks:
+  alura-vue3:
+    driver: bridge
