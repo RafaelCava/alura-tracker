@@ -1,11 +1,8 @@
-FROM node:16-alpine
+FROM node:16-alpine as builder
 
 WORKDIR /home/node/app
 
-RUN apk add --no-cache \
-  bash \
-  git \
-  curl
+RUN apk add --no-cache bash 
 
 COPY package.json .
 
@@ -15,8 +12,19 @@ COPY . .
 
 RUN yarn build
 
-ENTRYPOINT [ "yarn", "start" ]
+FROM node:16-alpine
+
+WORKDIR /home/node/app
+
+COPY --from=builder /home/node/app/.docker ./.docker
+COPY --from=builder /home/node/app/node_modules ./node_modules
+COPY --from=builder /home/node/app/dist ./dist
+COPY --from=builder /home/node/app/package.json ./package.json
+
+RUN npm i -g serve
 
 USER node
 
-EXPOSE 8080
+EXPOSE 3000
+
+ENTRYPOINT [ "serve", "-s", "dist" ]

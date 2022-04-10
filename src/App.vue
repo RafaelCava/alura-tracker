@@ -59,11 +59,6 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
-// $bg-primario-claro: #fff
-// $texto-primario-claro: #000
-
-// $bg-primario-escuro: #2b2d42
-// $texto-primario-escuro: #ddd
 .lista
   padding: 1.5rem
 
