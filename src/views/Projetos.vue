@@ -33,25 +33,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
-import Projeto from '@/interfaces/Projeto'
+import { computed, defineComponent } from '@vue/runtime-core'
+import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'ProjetoView',
   data() {
     return {
-      nomeDoProjeto: '',
-      projetos: [] as Projeto[]
+      nomeDoProjeto: ''
     }
   },
   methods: {
     salvar() {
-      const projeto: Projeto = {
-        nome: this.nomeDoProjeto,
-        id: new Date().toISOString()
-      }
-      this.projetos.push(projeto)
+      this.store.commit('ADICIONA_PROJETO', this.nomeDoProjeto)
       this.nomeDoProjeto = ''
+    }
+  },
+  setup() {
+    const store = useStore()
+    return {
+      store,
+      projetos: computed(() => store.state.projetos)
     }
   }
 })
