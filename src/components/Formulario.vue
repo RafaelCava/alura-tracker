@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box formulario">
     <div class="columns">
       <div
         class="column is-8"
@@ -10,16 +10,11 @@
           type="text"
           class="input"
           placeholder="Qual tarefa você deseja iniciar?"
+          v-model="descricao"
         />
       </div>
       <div class="column">
-        <div
-          class="is-flex is-align-items-center is-justify-content-space-between"
-        >
-          <Cronometro :tempoEmSegundos="tempoEmSegundos" />
-          <BotaoAcao :text="'play'" @acao="iniciar" />
-          <BotaoAcao :text="'stop'" :icon="'fas fa-stop'" @acao="finalizar" />
-        </div>
+        <Temporizador @aoTemporizadorFinalizado="finalizarTarefa" />
       </div>
     </div>
   </div>
@@ -27,30 +22,33 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Cronometro from './Cronometro.vue'
-import BotaoAcao from './BotaoAcao.vue'
+import Temporizador from './Temporizador.vue'
 
 export default defineComponent({
-  components: {
-    Cronometro,
-    BotaoAcao
-  },
   name: 'FormularioComponent',
+  emits: ['aoSalvarTarefa'],
+  components: {
+    Temporizador
+  },
   data() {
     return {
-      tempoEmSegundos: 0,
-      cronometro: 0
+      descricao: ''
     }
   },
   methods: {
-    iniciar() {
-      this.cronometro = setInterval(() => {
-        this.tempoEmSegundos += 1
-      }, 1000)
-    },
-    finalizar() {
-      clearInterval(this.cronometro)
+    finalizarTarefa(tempoDeCorrido: number): void {
+      this.$emit('aoSalvarTarefa', {
+        duracaoEmSegundos: tempoDeCorrido,
+        descricao: this.descricao
+      })
+      this.descricao = ''
     }
   }
 })
 </script>
+
+<style lang="sass">
+.formulario
+  color: var(--texto-primario)
+  background-color: var(--bg-primario)
+</style>
