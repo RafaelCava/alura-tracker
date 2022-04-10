@@ -61,7 +61,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Docker](https://www.docker.com/)
 - [FortAwesome](https://fortawesome.com/)
 - [Bulma](https://bulma.io/)
-
+- [commitizen](https://github.com/commitizen/cz-cli)
+- [commitlint](https://github.com/conventional-changelog/commitlint)
+- [Husky](https://typicode.github.io/husky/)
+- [Babel](https://babeljs.io/)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
 ## :white_check_mark: Pré requisitos ##
 
 Antes de começar :checkered_flag:, você precisa ter o [Git](https://git-scm.com) e o [Node](https://nodejs.org/en/) ou [Docker](https://www.docker.com/) instalados em sua maquina.
