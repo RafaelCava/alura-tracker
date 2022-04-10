@@ -82,6 +82,11 @@ $ yarn
 $ yarn start
 
 # O app vai inicializar em <http://localhost:3000>
+
+#or 
+
+docker-compose up -d --build
+# O app vai inicializar em <http://localhost:3000>
 ```
 
 ## :memo: Licença ##
