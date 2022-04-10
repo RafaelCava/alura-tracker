@@ -8,12 +8,7 @@
 import { defineComponent } from '@vue/runtime-core'
 
 export default defineComponent({
-  name: 'BoxComponent',
-  data() {
-    return {}
-  },
-  props: {},
-  methods: {}
+  name: 'BoxComponent'
 })
 </script>
 
