@@ -7,19 +7,24 @@
       <BarraLateral @aoTemaAlterado="trocarTema" />
     </div>
     <div class="column is-three-quarter conteudo">
+      <Notificacoes />
       <router-view />
     </div>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import BarraLateral from '@/components/BarraLateral.vue'
+import { defineComponent, defineAsyncComponent } from 'vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    BarraLateral
+    BarraLateral: defineAsyncComponent(
+      () => import('@/components/BarraLateral.vue')
+    ),
+    Notificacoes: defineAsyncComponent(
+      () => import('@/components/Notificacoes.vue')
+    )
   },
   data() {
     return {

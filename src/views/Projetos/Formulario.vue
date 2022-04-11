@@ -21,6 +21,8 @@
 import { defineComponent } from '@vue/runtime-core'
 import { useStore } from '@/store'
 import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/type-mutations'
+import { TipoDeNotificacao } from '@/interfaces/Notificacao'
+import { notificacaoMixin } from '@/mixins/notificar'
 
 export default defineComponent({
   name: 'FormularioView',
@@ -29,6 +31,7 @@ export default defineComponent({
       type: String
     }
   },
+  mixins: [notificacaoMixin],
   mounted() {
     if (this.id) {
       const projeto = this.store.state.projetos.find(
@@ -49,8 +52,18 @@ export default defineComponent({
           id: this.id,
           nome: this.nomeDoProjeto
         })
+        this.notificar(
+          TipoDeNotificacao.ATENCAO,
+          'Update',
+          'O Projeto foi alterado com sucesso!'
+        )
       } else {
         this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
+        this.notificar(
+          TipoDeNotificacao.SUCESSO,
+          'Excelente',
+          'O Projeto foi cadastrado com sucesso!'
+        )
       }
       this.nomeDoProjeto = ''
       this.$router.push({ name: 'Projetos' })
