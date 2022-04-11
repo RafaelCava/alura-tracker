@@ -43,19 +43,28 @@
 import { computed, defineComponent } from '@vue/runtime-core'
 import { useStore } from '@/store'
 import { EXCLUIR_PROJETO } from '@/store/type-mutations'
+import useNotificador from '@/hooks/notificador'
+import { TipoDeNotificacao } from '@/interfaces/Notificacao'
 
 export default defineComponent({
   name: 'ProjetoView',
   setup() {
     const store = useStore()
+    const { notificar } = useNotificador()
     return {
       store,
+      notificar,
       projetos: computed(() => store.state.projetos)
     }
   },
   methods: {
     excluir(id: string) {
       this.store.commit(EXCLUIR_PROJETO, id)
+      this.notificar(
+        TipoDeNotificacao.ATENCAO,
+        'Exclusão',
+        'O Projeto foi excluído com sucesso!'
+      )
     }
   }
 })
