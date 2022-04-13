@@ -20,9 +20,9 @@
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core'
 import { useStore } from '@/store'
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/type-mutations'
 import { TipoDeNotificacao } from '@/interfaces/Notificacao'
 import useNotificador from '@/hooks/notificador'
+import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from '@/store/tipo-acoes'
 
 export default defineComponent({
   name: 'FormularioView',
@@ -47,7 +47,7 @@ export default defineComponent({
   methods: {
     salvar() {
       if (this.id) {
-        this.store.commit(ALTERA_PROJETO, {
+        this.store.dispatch(ALTERAR_PROJETOS, {
           id: this.id,
           nome: this.nomeDoProjeto
         })
@@ -57,12 +57,18 @@ export default defineComponent({
           'O Projeto foi alterado com sucesso!'
         )
       } else {
-        this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
-        this.notificar(
-          TipoDeNotificacao.SUCESSO,
-          'Excelente',
-          'O Projeto foi cadastrado com sucesso!'
-        )
+        this.store
+          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
+          .then(() => {
+            this.notificar(
+              TipoDeNotificacao.SUCESSO,
+              'Excelente',
+              'O Projeto foi cadastrado com sucesso!'
+            )
+          })
+          .catch(err => {
+            this.notificar(TipoDeNotificacao.FALHA, 'Erro', err.message)
+          })
       }
       this.nomeDoProjeto = ''
       this.$router.push({ name: 'Projetos' })

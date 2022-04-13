@@ -1,0 +1,28 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "nome": "alura tracker"
+    }
+  ],
+  "tarefas": [
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "teste",
+      "projeto": {
+        "id": 1,
+        "nome": "alura tracker"
+      },
+      "id": 1
+    },
+    {
+      "duracaoEmSegundos": 1,
+      "descricao": "vai que vau",
+      "projeto": {
+        "id": 1,
+        "nome": "alura tracker"
+      },
+      "id": 2
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 <template>
   <Box>
-    <div class="columns">
+    <div class="columns" @click="$emit('tarefa_selecionada', tarefa)">
       <div class="column is-4">
         {{ tarefa.descricao || 'Task without description' }}
       </div>
@@ -22,6 +22,7 @@ import Box from './Box.vue'
 
 export default defineComponent({
   name: 'TarefaComponent',
+  emits: ['tarefa_selecionada'],
   props: {
     tarefa: {
       type: Object as PropType<Tarefa>,

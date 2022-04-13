@@ -45,11 +45,13 @@ import { useStore } from '@/store'
 import { EXCLUIR_PROJETO } from '@/store/type-mutations'
 import useNotificador from '@/hooks/notificador'
 import { TipoDeNotificacao } from '@/interfaces/Notificacao'
+import { OBTER_PROJETOS, REMOVER_PROJETOS } from '@/store/tipo-acoes'
 
 export default defineComponent({
   name: 'ProjetoView',
   setup() {
     const store = useStore()
+    store.dispatch(OBTER_PROJETOS)
     const { notificar } = useNotificador()
     return {
       store,
@@ -59,7 +61,7 @@ export default defineComponent({
   },
   methods: {
     excluir(id: string) {
-      this.store.commit(EXCLUIR_PROJETO, id)
+      this.store.dispatch(REMOVER_PROJETOS, id)
       this.notificar(
         TipoDeNotificacao.ATENCAO,
         'Exclusão',
