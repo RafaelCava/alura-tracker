@@ -2,7 +2,11 @@
   "projetos": [
     {
       "id": 1,
-      "nome": "alura tracker"
+      "nome": "alura tracker salve"
+    },
+    {
+      "id": 2,
+      "nome": "hello bebe"
     }
   ],
   "tarefas": [
@@ -23,6 +27,15 @@
         "nome": "alura tracker"
       },
       "id": 2
+    },
+    {
+      "duracaoEmSegundos": 1,
+      "descricao": "salve do fei ihuu",
+      "projeto": {
+        "nome": "teste",
+        "id": 2
+      },
+      "id": 3
     }
   ]
 }

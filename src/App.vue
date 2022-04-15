@@ -49,7 +49,7 @@ main
 
 main.modo-escuro
   --bg-primario: #2b2d42
-  --texto-primario: #000
+  --texto-primario: #ffffff
 
 .conteudo
   background-color: var(--bg-primario)

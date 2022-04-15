@@ -6,7 +6,7 @@
       </span>
       <span>Novo projeto</span>
     </router-link>
-    <table class="table is-fullwidth">
+    <table class="table is-fullwidth tabela">
       <thead>
         <tr>
           <th>ID</th>
@@ -42,7 +42,6 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/runtime-core'
 import { useStore } from '@/store'
-import { EXCLUIR_PROJETO } from '@/store/type-mutations'
 import useNotificador from '@/hooks/notificador'
 import { TipoDeNotificacao } from '@/interfaces/Notificacao'
 import { OBTER_PROJETOS, REMOVER_PROJETOS } from '@/store/tipo-acoes'
@@ -72,4 +71,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+.tabela
+  background-color: var(--bg-primario)
+  color: var(--texto-primario)
+</style>

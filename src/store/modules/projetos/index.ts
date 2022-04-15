@@ -20,7 +20,7 @@ export interface StateProject {
   projetos: ProjetoInterface[]
 }
 
-export const projeto: Module<StateProject, state> = {
+export const moduleProjeto: Module<StateProject, state> = {
   actions: {
     [OBTER_PROJETOS]({ commit }) {
       http.get('projetos').then(response => {

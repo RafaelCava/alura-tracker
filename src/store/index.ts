@@ -3,6 +3,7 @@ import Tarefa from '@/interfaces/Tarefa'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as vuexUseStore } from 'vuex'
 import { OBTER_TAREFAS, CADASTRAR_TAREFA, ALTERAR_TAREFA } from './tipo-acoes'
+import { moduleProjeto as projeto } from './modules/projetos'
 import {
   NOTIFICAR,
   DEFINIR_TAREFAS,
@@ -68,7 +69,9 @@ export const store = createStore<state>({
         .then(() => commit(ALTERA_TAREFA, tarefa))
     }
   },
-  modules: {}
+  modules: {
+    projeto
+  }
 })
 
 export function useStore(): Store<state> {
