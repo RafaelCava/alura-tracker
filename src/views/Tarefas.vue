@@ -38,7 +38,9 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Salvar Alterações</button>
+          <button class="button is-success" @click="alterarTarefa">
+            Salvar Alterações
+          </button>
           <button class="button is-danger" @click="closeModal">Cancelar</button>
         </footer>
       </div>
@@ -53,7 +55,8 @@ import { useStore } from '@/store'
 import {
   OBTER_TAREFAS,
   CADASTRAR_TAREFA,
-  OBTER_PROJETOS
+  OBTER_PROJETOS,
+  ALTERAR_TAREFA
 } from '@/store/tipo-acoes'
 import Tarefa from '@/interfaces/Tarefa'
 
@@ -83,6 +86,10 @@ export default defineComponent({
     },
     selecionarTarefa(tarefa: Tarefa) {
       this.tarefaSelecionada = tarefa
+    },
+    alterarTarefa: async function () {
+      await this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
+      this.closeModal()
     }
   },
   setup() {
