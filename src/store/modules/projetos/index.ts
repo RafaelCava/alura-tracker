@@ -1,5 +1,5 @@
 import ProjetoInterface from '@/interfaces/Projeto'
-import { state } from '../../index'
+import { State } from '../../index'
 import { Module } from 'vuex'
 import {
   ADICIONA_PROJETO,
@@ -20,7 +20,7 @@ export interface StateProject {
   projetos: ProjetoInterface[]
 }
 
-export const moduleProjeto: Module<StateProject, state> = {
+export const moduleProjeto: Module<StateProject, State> = {
   actions: {
     [OBTER_PROJETOS]({ commit }) {
       http.get('projetos').then(response => {
@@ -41,22 +41,22 @@ export const moduleProjeto: Module<StateProject, state> = {
     }
   },
   mutations: {
-    [DEFINIR_PROJETO](state, projetos: Projeto[]) {
-      state.projetos = projetos
+    [DEFINIR_PROJETO](State, projetos: Projeto[]) {
+      State.projetos = projetos
     },
-    [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
+    [ADICIONA_PROJETO](State, nomeDoProjeto: string) {
       const projeto = {
         id: new Date().toISOString(),
         nome: nomeDoProjeto
       } as Projeto
-      state.projetos.push(projeto)
+      State.projetos.push(projeto)
     },
-    [ALTERA_PROJETO](state, projeto: Projeto) {
-      const index = state.projetos.findIndex(proj => proj.id == projeto.id)
-      state.projetos[index] = projeto
+    [ALTERA_PROJETO](State, projeto: Projeto) {
+      const index = State.projetos.findIndex(proj => proj.id == projeto.id)
+      State.projetos[index] = projeto
     },
-    [EXCLUIR_PROJETO](state, id: string) {
-      state.projetos = state.projetos.filter(proj => proj.id != id)
+    [EXCLUIR_PROJETO](State, id: string) {
+      State.projetos = State.projetos.filter(proj => proj.id != id)
     }
   }
 }

@@ -60,18 +60,37 @@ export default defineComponent({
         this.store
           .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
           .then(() => {
-            this.notificar(
+            this.lidaComNotificacao(
               TipoDeNotificacao.SUCESSO,
               'Excelente',
               'O Projeto foi cadastrado com sucesso!'
             )
           })
           .catch(err => {
-            this.notificar(TipoDeNotificacao.FALHA, 'Erro', err.message)
+            this.lidaComNotificacao(
+              TipoDeNotificacao.FALHA,
+              'Erro',
+              err.message
+            )
           })
       }
       this.nomeDoProjeto = ''
       this.$router.push({ name: 'Projetos' })
+    },
+    lidaComNotificacao(
+      tipoDeNotificacao: TipoDeNotificacao,
+      titulo: string,
+      mensagem: string
+    ) {
+      const estrategias = {
+        [TipoDeNotificacao.SUCESSO]: (): void =>
+          this.notificar(tipoDeNotificacao, titulo, mensagem),
+        [TipoDeNotificacao.ATENCAO]: (): void =>
+          this.notificar(tipoDeNotificacao, titulo, mensagem),
+        [TipoDeNotificacao.FALHA]: (): void =>
+          this.notificar(tipoDeNotificacao, titulo, mensagem)
+      }
+      estrategias[tipoDeNotificacao]()
     }
   },
   setup() {

@@ -1,79 +1,49 @@
 import Notificacao from '@/interfaces/Notificacao'
-import Tarefa from '@/interfaces/Tarefa'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as vuexUseStore } from 'vuex'
-import { OBTER_TAREFAS, CADASTRAR_TAREFA, ALTERAR_TAREFA } from './tipo-acoes'
 import { moduleProjeto as projeto } from './modules/projetos'
-import {
-  NOTIFICAR,
-  DEFINIR_TAREFAS,
-  ADICIONAR_TAREFAS,
-  ALTERA_TAREFA
-} from './type-mutations'
-import http from '@/http'
+import { moduleTarefa as tarefa } from './modules/tarefas'
+import { NOTIFICAR } from './type-mutations'
 import { StateProject } from './modules/projetos'
+import { StateTarefa } from './modules/tarefas'
 
-export interface state {
+export interface State {
   notificacoes: Notificacao[]
-  tarefas: Tarefa[]
+  tarefa: StateTarefa
   projeto: StateProject
 }
 
-export const key: InjectionKey<Store<state>> = Symbol()
+export const key: InjectionKey<Store<State>> = Symbol()
 
-export const store = createStore<state>({
+export const store = createStore<State>({
   state: {
     notificacoes: [],
-    tarefas: [],
+    tarefa: {
+      tarefas: []
+    },
     projeto: {
       projetos: []
     }
   },
   getters: {},
   mutations: {
-    [NOTIFICAR](state, notificacao: Notificacao) {
+    [NOTIFICAR](State, notificacao: Notificacao) {
       notificacao.id = new Date().getTime()
-      state.notificacoes.push(notificacao)
+      State.notificacoes.push(notificacao)
       setTimeout(() => {
-        state.notificacoes = state.notificacoes.filter(
-          not => not.id != notificacao.id
+        State.notificacoes = State.notificacoes.filter(
+          n => n.id != notificacao.id
         )
       }, 3000)
-    },
-
-    [DEFINIR_TAREFAS](state, tarefas: Tarefa[]) {
-      state.tarefas = tarefas
-    },
-    [ADICIONAR_TAREFAS](state, tarefa: Tarefa) {
-      state.tarefas.push(tarefa)
-    },
-    [ALTERA_TAREFA](state, tarefa: Tarefa) {
-      const index = state.tarefas.findIndex(value => value.id == tarefa.id)
-      state.tarefas[index] = tarefa
     }
   },
-  actions: {
-    [OBTER_TAREFAS]({ commit }) {
-      http.get('tarefas').then(response => {
-        commit(DEFINIR_TAREFAS, response.data)
-      })
-    },
-    [CADASTRAR_TAREFA]({ commit }, tarefa: Tarefa) {
-      return http
-        .post('tarefas', tarefa)
-        .then(response => commit(ADICIONAR_TAREFAS, response.data))
-    },
-    [ALTERAR_TAREFA]({ commit }, tarefa: Tarefa) {
-      return http
-        .put(`tarefas/${tarefa.id}`, tarefa)
-        .then(() => commit(ALTERA_TAREFA, tarefa))
-    }
-  },
+  actions: {},
   modules: {
-    projeto
+    projeto,
+    tarefa
   }
 })
 
-export function useStore(): Store<state> {
+export function useStore(): Store<State> {
   return vuexUseStore(key)
 }
