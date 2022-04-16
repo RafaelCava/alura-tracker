@@ -10,7 +10,7 @@ services:
       - 8080:8080
     container_name: vue3-alura
     volumes:
-      - .:/home/node/app
+      - .:/usr/vue-tracker/app
     networks:
       - alura-vue3
 networks:
