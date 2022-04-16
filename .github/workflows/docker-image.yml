@@ -12,11 +12,13 @@ env:
 
 jobs:
 
-  tests:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: yarn install --silent
     - name: Verify lint
       run: yarn lint
 
