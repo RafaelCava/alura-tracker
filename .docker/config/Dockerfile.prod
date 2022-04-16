@@ -1,6 +1,6 @@
 FROM node:16-alpine as builder
 
-WORKDIR /usr/vue-tracker/app
+WORKDIR /usr/alura-tracker/app
 
 COPY package.json .
 
@@ -12,12 +12,12 @@ RUN yarn build
 
 FROM node:16-alpine
 
-WORKDIR /usr/vue-tracker/app
+WORKDIR /usr/alura-tracker/app
 
 RUN apk add --no-cache bash 
 
-COPY --from=builder /usr/vue-tracker/app/node_modules ./node_modules
-COPY --from=builder /usr/vue-tracker/app/dist ./dist
+COPY --from=builder /usr/alura-tracker/app/node_modules ./node_modules
+COPY --from=builder /usr/alura-tracker/app/dist ./dist
 
 RUN npm i -g serve
 

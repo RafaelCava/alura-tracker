@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-WORKDIR /usr/vue-tracker/app
+WORKDIR /usr/alura-tracker/app
 
 RUN apk add --no-cache \
   bash \
