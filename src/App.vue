@@ -35,6 +35,9 @@ export default defineComponent({
     trocarTema(modoEscuroAtivo: boolean): void {
       this.modoEscuroAtivo = modoEscuroAtivo
     }
+  },
+  created() {
+    document.title = 'Vue-Tracker'
   }
 })
 </script>

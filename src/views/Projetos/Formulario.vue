@@ -18,11 +18,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent, ref } from 'vue'
 import { useStore } from '@/store'
 import { TipoDeNotificacao } from '@/interfaces/Notificacao'
 import useNotificador from '@/hooks/notificador'
 import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from '@/store/tipo-acoes'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'FormularioView',
@@ -31,74 +32,74 @@ export default defineComponent({
       type: String
     }
   },
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projeto.projetos.find(
-        projeto => projeto.id == this.id
+  setup(props) {
+    const router = useRouter()
+    const store = useStore()
+    const nomeDoProjeto = ref('')
+
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find(
+        projeto => projeto.id == props.id
       )
-      this.nomeDoProjeto = projeto?.nome || ''
+      nomeDoProjeto.value = projeto?.nome || ''
     }
-  },
-  data() {
-    return {
-      nomeDoProjeto: ''
+
+    const lidaComNotificacao = (
+      tipoDeNotificacao: TipoDeNotificacao,
+      titulo: string,
+      mensagem: string
+    ) => {
+      const estrategias = {
+        [TipoDeNotificacao.SUCESSO]: (): void =>
+          notificar(tipoDeNotificacao, titulo, mensagem),
+        [TipoDeNotificacao.ATENCAO]: (): void =>
+          notificar(tipoDeNotificacao, titulo, mensagem),
+        [TipoDeNotificacao.FALHA]: (): void =>
+          notificar(tipoDeNotificacao, titulo, mensagem)
+      }
+      estrategias[tipoDeNotificacao]()
     }
-  },
-  methods: {
-    salvar() {
-      if (this.id) {
-        this.store.dispatch(ALTERAR_PROJETOS, {
-          id: this.id,
-          nome: this.nomeDoProjeto
-        })
-        this.notificar(
-          TipoDeNotificacao.ATENCAO,
-          'Update',
-          'O Projeto foi alterado com sucesso!'
-        )
-      } else {
-        this.store
-          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
+
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(ALTERAR_PROJETOS, {
+            id: props.id,
+            nome: nomeDoProjeto.value
+          })
           .then(() => {
-            this.lidaComNotificacao(
+            lidaComNotificacao(
+              TipoDeNotificacao.ATENCAO,
+              'Update',
+              'O Projeto foi alterado com sucesso!'
+            )
+          })
+          .catch(err => {
+            lidaComNotificacao(TipoDeNotificacao.FALHA, 'Erro', err.message)
+          })
+      } else {
+        store
+          .dispatch(CADASTRAR_PROJETOS, nomeDoProjeto.value)
+          .then(() => {
+            lidaComNotificacao(
               TipoDeNotificacao.SUCESSO,
               'Excelente',
               'O Projeto foi cadastrado com sucesso!'
             )
           })
           .catch(err => {
-            this.lidaComNotificacao(
-              TipoDeNotificacao.FALHA,
-              'Erro',
-              err.message
-            )
+            lidaComNotificacao(TipoDeNotificacao.FALHA, 'Erro', err.message)
           })
       }
-      this.nomeDoProjeto = ''
-      this.$router.push({ name: 'Projetos' })
-    },
-    lidaComNotificacao(
-      tipoDeNotificacao: TipoDeNotificacao,
-      titulo: string,
-      mensagem: string
-    ) {
-      const estrategias = {
-        [TipoDeNotificacao.SUCESSO]: (): void =>
-          this.notificar(tipoDeNotificacao, titulo, mensagem),
-        [TipoDeNotificacao.ATENCAO]: (): void =>
-          this.notificar(tipoDeNotificacao, titulo, mensagem),
-        [TipoDeNotificacao.FALHA]: (): void =>
-          this.notificar(tipoDeNotificacao, titulo, mensagem)
-      }
-      estrategias[tipoDeNotificacao]()
+      nomeDoProjeto.value = ''
+      router.push({ name: 'Projetos' })
     }
-  },
-  setup() {
-    const store = useStore()
+
     const { notificar } = useNotificador()
+
     return {
-      store,
-      notificar
+      nomeDoProjeto,
+      salvar
     }
   }
 })

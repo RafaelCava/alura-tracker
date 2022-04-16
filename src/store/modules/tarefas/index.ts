@@ -19,8 +19,12 @@ export interface StateTarefa {
 
 export const moduleTarefa: Module<StateTarefa, State> = {
   actions: {
-    [OBTER_TAREFAS]({ commit }) {
-      http.get('tarefas').then(response => {
+    [OBTER_TAREFAS]({ commit }, filtro: string) {
+      let url = 'tarefas'
+      if (filtro) {
+        url += '?descricao=' + filtro
+      }
+      http.get(url).then(response => {
         commit(DEFINIR_TAREFAS, response.data)
       })
     },
