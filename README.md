@@ -5,7 +5,7 @@
 
 </div>
 
-<h1 align="center">Alura Vue3</h1>
+<h1 align="center">Vue Tracker</h1>
 
 <p align="center">
   <img alt="Principal linguagem do projeto" src="https://img.shields.io/github/languages/top/RafaelCava/alura-tracker?color=56BEB8">
