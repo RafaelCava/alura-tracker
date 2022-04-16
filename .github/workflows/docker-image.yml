@@ -21,10 +21,8 @@ jobs:
     - name: Auth
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-    - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file ./.docker/config/Dockerfile.prod --tag ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+      run: docker build . --file ./.docker/config/Dockerfile.prod --tag ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
 
-    - uses: actions/checkout@v3
     - name: Deploy
       run: docker push ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
