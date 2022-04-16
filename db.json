@@ -16,7 +16,7 @@
   "tarefas": [
     {
       "duracaoEmSegundos": 2,
-      "descricao": "teste",
+      "descricao": "teste gaga",
       "projeto": {
         "id": 1,
         "nome": "alura tracker"
