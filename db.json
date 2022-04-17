@@ -1,0 +1,72 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "nome": "alura tracker"
+    },
+    {
+      "id": 2,
+      "nome": "vapo"
+    },
+    {
+      "id": 3,
+      "nome": "ihuuuuuuu"
+    }
+  ],
+  "tarefas": [
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "teste gaga",
+      "projeto": {
+        "id": 1,
+        "nome": "alura tracker"
+      },
+      "id": 1
+    },
+    {
+      "duracaoEmSegundos": 1,
+      "descricao": "agora foioooi",
+      "projeto": {
+        "id": 1,
+        "nome": "alura tracker"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 1,
+      "descricao": "salve do fei ihuu",
+      "projeto": {
+        "nome": "teste",
+        "id": 2
+      },
+      "id": 3
+    },
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "teste",
+      "projeto": {
+        "id": 1,
+        "nome": "alura tracker salve"
+      },
+      "id": 4
+    },
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "hello",
+      "projeto": {
+        "id": 2,
+        "nome": "vapo"
+      },
+      "id": 5
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "salveeee",
+      "projeto": {
+        "id": 3,
+        "nome": "ihuuuuuuu"
+      },
+      "id": 6
+    }
+  ]
+}

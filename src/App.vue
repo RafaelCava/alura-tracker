@@ -1,30 +1,59 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <main
+    class="columns is-gapless is-multiline"
+    :class="{ 'modo-escuro': modoEscuroAtivo }"
+  >
+    <div class="column is-one-quarter">
+      <BarraLateral @aoTemaAlterado="trocarTema" />
+    </div>
+    <div class="column is-three-quarter conteudo">
+      <Notificacoes />
+      <router-view />
+    </div>
+  </main>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent, defineAsyncComponent } from 'vue'
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default defineComponent({
+  name: 'App',
+  components: {
+    BarraLateral: defineAsyncComponent(
+      () => import('@/components/BarraLateral.vue')
+    ),
+    Notificacoes: defineAsyncComponent(
+      () => import('@/components/Notificacoes.vue')
+    )
+  },
+  data() {
+    return {
+      modoEscuroAtivo: false
     }
+  },
+  methods: {
+    trocarTema(modoEscuroAtivo: boolean): void {
+      this.modoEscuroAtivo = modoEscuroAtivo
+    }
+  },
+  created() {
+    document.title = 'Vue-Tracker'
   }
-}
+})
+</script>
+
+<style lang="sass">
+.lista
+  padding: 1.5rem
+
+main
+  --bg-primario: #fff
+  --texto-primario: #000
+
+main.modo-escuro
+  --bg-primario: #2b2d42
+  --texto-primario: #ffffff
+
+.conteudo
+  background-color: var(--bg-primario)
 </style>

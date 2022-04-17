@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  alura-tracker:
+    build:
+      context: .
+      dockerfile: ./.docker/config/Dockerfile
+    entrypoint: ./.docker/entrypoint.sh
+    ports:
+      - 8080:8080
+    container_name: vue3-alura
+    volumes:
+      - .:/usr/alura-tracker/app
+    networks:
+      - alura-tracker
+networks:
+  alura-vue3:
+    driver: bridge

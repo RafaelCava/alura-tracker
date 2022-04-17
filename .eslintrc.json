@@ -1,0 +1,36 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:vue/vue3-essential",
+        "airbnb-base",
+        "eslint:recommended",
+        "@vue/typescript/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue",
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "import/extensions": "off",
+        "import/no-duplicates": "off",
+        "import/no-unresolved": "off",
+        "eqeqeq": "off",
+        "no-shadow": "off",
+        "import/prefer-default-export": "off",
+        "no-param-reassign": "off",
+        "symbol-description": "off",
+        "func-names": "off"
+    }
+}
