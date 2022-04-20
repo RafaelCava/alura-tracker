@@ -1,11 +1,9 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as vuexUseStore } from 'vuex'
 import Notificacao from '@/interfaces/Notificacao'
-import { moduleProjeto as projeto } from './modules/projetos'
-import { moduleTarefa as tarefa } from './modules/tarefas'
 import { NOTIFICAR } from './type-mutations'
-import { StateProject } from './modules/projetos'
-import { StateTarefa } from './modules/tarefas'
+import { StateProject, moduleProjeto as projeto } from './modules/projetos'
+import { StateTarefa, moduleTarefa as tarefa } from './modules/tarefas'
 
 export interface State {
   notificacoes: Notificacao[]
